@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotics Circuitry Calculators</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMjdqwI3eP9ndCRF5c6CqvZVjHyjzr+T39T2Cfh" crossorigin="anonymous">
+</head>
+<body>
+    <div class="header">
+        <h1>Robotics Circuitry Calculators</h1>
+    </div>
+    
+    <!-- Dropdown Menu to Select Calculator -->
+    <div class="dropdown-container">
+        <label for="calculator-dropdown"><i class="fas fa-calculator"></i> Select Calculator:</label>
+        <select id="calculator-dropdown" onchange="openDropdownTab()">
+            <option value="motor">Motor Power Supply Calculator</option>
+            <option value="battery">Battery Life Calculator</option>
+            <option value="voltage-divider">Voltage Divider Calculator</option>
+            <option value="ohms-law">Ohm's Law Calculator</option>
+            <option value="led-resistor">LED Resistor Calculator</option>
+            <option value="capacitor-charge">Capacitor Charge Time Calculator</option>
+            <option value="motor-power">Motor Power and Efficiency Calculator</option>
+            <option value="pcb-trace">PCB Trace Width Calculator</option>
+            <option value="resonance">Inductor-Capacitor Resonance Calculator</option>
+            <option value="power-dissipation">Power Dissipation Calculator</option>
+            <option value="db-calculator">Decibel (dB) Calculator</option>
+            <option value="pwm">PWM Calculator</option>
+            <option value="impedance">Circuit Impedance Calculator</option>
+            <option value="current-divider">Current Divider Calculator</option>
+            <option value="thermal">Thermal Heat Sink Calculator</option>
+        </select>
+    </div>
+
+    <!-- Motor Power Supply Calculator -->
+    <div class="container tab-content" id="motor">
+        <h2>Stepper Motor Power Supply Calculator</h2>
+        <form id="motor-form">
+            <div class="input-group">
+                <label for="step-angle"><i class="fas fa-compass"></i> Step Angle (degrees):</label>
+                <input type="number" id="step-angle" name="step-angle" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="current"><i class="fas fa-bolt"></i> Current per Phase (A):</label>
+                <input type="number" id="current" name="current" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="torque"><i class="fas fa-weight-hanging"></i> Holding Torque (oz/in):</label>
+                <input type="number" id="torque" name="torque" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="voltage"><i class="fas fa-battery-full"></i> Operating Voltage (V):</label>
+                <input type="number" id="voltage" name="voltage" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="number-of-motors"><i class="fas fa-cogs"></i> Number of Motors:</label>
+                <input type="number" id="number-of-motors" name="number-of-motors" min="1" step="1" required>
+            </div>
+            <button type="button" onclick="calculatePowerSupply()">Calculate</button>
+        </form>
+        <div id="result" class="result"></div>
+    </div>
+
+    <!-- Battery Life Calculator -->
+    <div class="container tab-content" id="battery" style="display:none;">
+        <h2>Battery Life Calculator</h2>
+        <form id="battery-form">
+            <div class="input-group">
+                <label for="battery-capacity"><i class="fas fa-battery-half"></i> Battery Capacity (mAh or Ah):</label>
+                <input type="number" id="battery-capacity" name="battery-capacity" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="current-draw"><i class="fas fa-tachometer-alt"></i> Current Draw (A):</label>
+                <input type="number" id="current-draw" name="current-draw" min="0.01" step="0.01" required>
+            </div>
+            <button type="button" onclick="calculateBatteryLife()">Calculate</button>
+        </form>
+        <div id="battery-result" class="result"></div>
+    </div>
+
+    <!-- Voltage Divider Calculator -->
+    <div class="container tab-content" id="voltage-divider" style="display:none;">
+        <h2>Voltage Divider Calculator</h2>
+        <form id="voltage-divider-form">
+            <div class="input-group">
+                <label for="input-voltage"><i class="fas fa-plug"></i> Input Voltage (V):</label>
+                <input type="number" id="input-voltage" name="input-voltage" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="resistor1"><i class="fas fa-resistor"></i> Resistor R1 (Ω):</label>
+                <input type="number" id="resistor1" name="resistor1" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="resistor2"><i class="fas fa-resistor"></i> Resistor R2 (Ω):</label>
+                <input type="number" id="resistor2" name="resistor2" min="0.01" step="0.01" required>
+            </div>
+            <button type="button" onclick="calculateVoltageDivider()">Calculate</button>
+        </form>
+        <div id="voltage-divider-result" class="result"></div>
+    </div>
+
+    <!-- Ohm's Law Calculator -->
+    <div class="container tab-content" id="ohms-law" style="display:none;">
+        <h2>Ohm's Law Calculator</h2>
+        <form id="ohms-law-form">
+            <div class="input-group">
+                <label for="voltage-ohms-law"><i class="fas fa-bolt"></i> Voltage (V):</label>
+                <input type="number" id="voltage-ohms-law" name="voltage-ohms-law" min="0.01" step="0.01">
+            </div>
+            <div class="input-group">
+                <label for="current-ohms-law"><i class="fas fa-tachometer-alt"></i> Current (A):</label>
+                <input type="number" id="current-ohms-law" name="current-ohms-law" min="0.01" step="0.01">
+            </div>
+            <div class="input-group">
+                <label for="resistance-ohms-law"><i class="fas fa-resistor"></i> Resistance (Ω):</label>
+                <input type="number" id="resistance-ohms-law" name="resistance-ohms-law" min="0.01" step="0.01">
+            </div>
+            <button type="button" onclick="calculateOhmsLaw()">Calculate</button>
+        </form>
+        <div id="ohms-law-result" class="result"></div>
+    </div>
+
+    <!-- LED Resistor Calculator -->
+    <div class="container tab-content" id="led-resistor" style="display:none;">
+        <h2>LED Resistor Calculator</h2>
+        <form id="led-resistor-form">
+            <div class="input-group">
+                <label for="supply-voltage"><i class="fas fa-battery-full"></i> Supply Voltage (V):</label>
+                <input type="number" id="supply-voltage" name="supply-voltage" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="led-forward-voltage"><i class="fas fa-lightbulb"></i> LED Forward Voltage (V):</label>
+                <input type="number" id="led-forward-voltage" name="led-forward-voltage" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="led-current"><i class="fas fa-tachometer-alt"></i> LED Current (mA):</label>
+                <input type="number" id="led-current" name="led-current" min="0.01" step="0.01" required>
+            </div>
+            <button type="button" onclick="calculateLEDResistor()">Calculate</button>
+        </form>
+        <div id="led-resistor-result" class="result"></div>
+    </div>
+
+    <!-- Capacitor Charge Time Calculator -->
+    <div class="container tab-content" id="capacitor-charge" style="display:none;">
+        <h2>Capacitor Charge Time Calculator</h2>
+        <form id="capacitor-charge-form">
+            <div class="input-group">
+                <label for="capacitance"><i class="fas fa-battery-full"></i> Capacitance (F):</label>
+                <input type="number" id="capacitance" name="capacitance" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="resistance"><i class="fas fa-resistor"></i> Resistance (Ω):</label>
+                <input type="number" id="resistance" name="resistance" min="0.01" step="0.01" required>
+            </div>
+            <button type="button" onclick="calculateCapacitorChargeTime()">Calculate</button>
+        </form>
+        <div id="capacitor-charge-result" class="result"></div>
+    </div>
+
+    <!-- Motor Power and Efficiency Calculator -->
+    <div class="container tab-content" id="motor-power" style="display:none;">
+        <h2>Motor Power and Efficiency Calculator</h2>
+        <form id="motor-power-form">
+            <div class="input-group">
+                <label for="motor-voltage"><i class="fas fa-bolt"></i> Voltage (V):</label>
+                <input type="number" id="motor-voltage" name="motor-voltage" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="motor-current"><i class="fas fa-tachometer-alt"></i> Current (A):</label>
+                <input type="number" id="motor-current" name="motor-current" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="motor-torque"><i class="fas fa-weight-hanging"></i> Torque (Nm):</label>
+                <input type="number" id="motor-torque" name="motor-torque" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="motor-speed"><i class="fas fa-tachometer-alt"></i> Speed (RPM):</label>
+                <input type="number" id="motor-speed" name="motor-speed" min="0.01" step="0.01" required>
+            </div>
+            <button type="button" onclick="calculateMotorPower()">Calculate</button>
+        </form>
+        <div id="motor-power-result" class="result"></div>
+    </div>
+
+    <!-- PCB Trace Width Calculator -->
+    <div class="container tab-content" id="pcb-trace" style="display:none;">
+        <h2>PCB Trace Width Calculator</h2>
+        <form id="pcb-trace-form">
+            <div class="input-group">
+                <label for="trace-current"><i class="fas fa-tachometer-alt"></i> Current (A):</label>
+                <input type="number" id="trace-current" name="trace-current" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="temperature-rise"><i class="fas fa-temperature-high"></i> Temperature Rise (°C):</label>
+                <input type="number" id="temperature-rise" name="temperature-rise" min="0.01" step="0.01" required>
+            </div>
+            <button type="button" onclick="calculatePCBTraceWidth()">Calculate</button>
+        </form>
+        <div id="pcb-trace-result" class="result"></div>
+    </div>
+
+    <!-- Inductor-Capacitor Resonance Calculator -->
+    <div class="container tab-content" id="resonance" style="display:none;">
+        <h2>Inductor-Capacitor Resonance Calculator</h2>
+        <form id="resonance-form">
+            <div class="input-group">
+                <label for="inductance"><i class="fas fa-magnet"></i> Inductance (H):</label>
+                <input type="number" id="inductance" name="inductance" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="capacitance"><i class="fas fa-battery-full"></i> Capacitance (F):</label>
+                <input type="number" id="capacitance" name="capacitance" min="0.01" step="0.01" required>
+            </div>
+            <button type="button" onclick="calculateResonance()">Calculate</button>
+        </form>
+        <div id="resonance-result" class="result"></div>
+    </div>
+
+    <!-- Power Dissipation Calculator -->
+    <div class="container tab-content" id="power-dissipation" style="display:none;">
+        <h2>Power Dissipation Calculator</h2>
+        <form id="power-dissipation-form">
+            <div class="input-group">
+                <label for="voltage-dissipation"><i class="fas fa-bolt"></i> Voltage (V):</label>
+                <input type="number" id="voltage-dissipation" name="voltage-dissipation" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="current-dissipation"><i class="fas fa-tachometer-alt"></i> Current (A):</label>
+                <input type="number" id="current-dissipation" name="current-dissipation" min="0.01" step="0.01" required>
+            </div>
+            <button type="button" onclick="calculatePowerDissipation()">Calculate</button>
+        </form>
+        <div id="power-dissipation-result" class="result"></div>
+    </div>
+
+    <!-- Decibel (dB) Calculator -->
+    <div class="container tab-content" id="db-calculator" style="display:none;">
+        <h2>Decibel (dB) Calculator</h2>
+        <form id="db-calculator-form">
+            <div class="input-group">
+                <label for="input-power"><i class="fas fa-signal"></i> Input Power (W):</label>
+                <input type="number" id="input-power" name="input-power" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="output-power"><i class="fas fa-signal"></i> Output Power (W):</label>
+                <input type="number" id="output-power" name="output-power" min="0.01" step="0.01" required>
+            </div>
+            <button type="button" onclick="calculateDecibels()">Calculate</button>
+        </form>
+        <div id="db-calculator-result" class="result"></div>
+    </div>
+
+    <!-- PWM Calculator -->
+    <div class="container tab-content" id="pwm" style="display:none;">
+        <h2>PWM Calculator</h2>
+        <form id="pwm-form">
+            <div class="input-group">
+                <label for="frequency"><i class="fas fa-wave-square"></i> Frequency (Hz):</label>
+                <input type="number" id="frequency" name="frequency" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="duty-cycle"><i class="fas fa-percent"></i> Duty Cycle (%):</label>
+                <input type="number" id="duty-cycle" name="duty-cycle" min="0.01" step="0.01" required>
+            </div>
+            <button type="button" onclick="calculatePWM()">Calculate</button>
+        </form>
+        <div id="pwm-result" class="result"></div>
+    </div>
+
+    <!-- Circuit Impedance Calculator -->
+    <div class="container tab-content" id="impedance" style="display:none;">
+        <h2>Circuit Impedance Calculator</h2>
+        <form id="impedance-form">
+            <div class="input-group">
+                <label for="resistance-impedance"><i class="fas fa-resistor"></i> Resistance (Ω):</label>
+                <input type="number" id="resistance-impedance" name="resistance-impedance" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="inductance-impedance"><i class="fas fa-industry"></i> Inductance (H):</label>
+                <input type="number" id="inductance-impedance" name="inductance-impedance" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="capacitance-impedance"><i class="fas fa-battery-full"></i> Capacitance (F):</label>
+                <input type="number" id="capacitance-impedance" name="capacitance-impedance" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="impedance-frequency"><i class="fas fa-wave-square"></i> Frequency (Hz):</label>
+                <input type="number" id="impedance-frequency" name="impedance-frequency" min="0.01" step="0.01" required>
+            </div>
+            <button type="button" onclick="calculateImpedance()">Calculate</button>
+        </form>
+        <div id="impedance-result" class="result"></div>
+    </div>
+
+    <!-- Current Divider Calculator -->
+    <div class="container tab-content" id="current-divider" style="display:none;">
+        <h2>Current Divider Calculator</h2>
+        <form id="current-divider-form">
+            <div class="input-group">
+                <label for="total-current"><i class="fas fa-tachometer-alt"></i> Total Current (A):</label>
+                <input type="number" id="total-current" name="total-current" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="resistor-branch1"><i class="fas fa-resistor"></i> Resistor in Branch 1 (Ω):</label>
+                <input type="number" id="resistor-branch1" name="resistor-branch1" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="resistor-branch2"><i class="fas fa-resistor"></i> Resistor in Branch 2 (Ω):</label>
+                <input type="number" id="resistor-branch2" name="resistor-branch2" min="0.01" step="0.01" required>
+            </div>
+            <button type="button" onclick="calculateCurrentDivider()">Calculate</button>
+        </form>
+        <div id="current-divider-result" class="result"></div>
+    </div>
+
+    <!-- Thermal Heat Sink Calculator -->
+    <div class="container tab-content" id="thermal" style="display:none;">
+        <h2>Thermal Heat Sink Calculator</h2>
+        <form id="thermal-form">
+            <div class="input-group">
+                <label for="power-dissipation"><i class="fas fa-bolt"></i> Power Dissipation (W):</label>
+                <input type="number" id="power-dissipation" name="power-dissipation" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="thermal-resistance"><i class="fas fa-temperature-high"></i> Thermal Resistance (°C/W):</label>
+                <input type="number" id="thermal-resistance" name="thermal-resistance" min="0.01" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="ambient-temperature"><i class="fas fa-temperature-low"></i> Ambient Temperature (°C):</label>
+                <input type="number" id="ambient-temperature" name="ambient-temperature" min="0.01" step="0.01" required>
+            </div>
+            <button type="button" onclick="calculateThermalHeatSink()">Calculate</button>
+        </form>
+        <div id="thermal-result" class="result"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
