@@ -2,6 +2,6 @@ title: "Walter Glockner's Portfolio"
 email: walter.w.glockner@gmail.com
 description: "A showcase of my projects and skills."
 baseurl: "" # Leave this empty
-url: "glockner-automation.com"
+url: "https://github.com/wglockner/robo-calc.github.io.git"
 github_username: wglockner
 theme: minima
