@@ -1,6 +1,9 @@
 ---
-# Feel free to add content and custom Front Matter to this file.
-# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-
 layout: home
+title: Welcome to My Portfolio
 ---
+
+# There are may like it but this one is mine
+
+
+Hello! I'm Walter Glockner, an Undergraduate Research Assistant at Iowa State University. Explore my projects and get to know more about my work.
